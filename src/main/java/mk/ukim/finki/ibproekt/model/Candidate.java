@@ -16,7 +16,7 @@ public class Candidate {
 
     private String surname;
 
-
+    private String image;
 
 
 }
