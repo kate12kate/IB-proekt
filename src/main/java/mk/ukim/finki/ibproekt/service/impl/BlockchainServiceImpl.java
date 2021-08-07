@@ -54,15 +54,23 @@ public class BlockchainServiceImpl implements BlockchainService {
 
     @Override
     public void addBlock(Block block) {
-        block.setPreviousHash(blockchain.get(blockchain.size()-1).getHash());
-        this.blockchain.add(block);
+
+        block.mineBlock(difficulty);
+        blockchain.add(block);
+
     }
 
     @Override
     public Block createBlock(Candidate candidate) {
+        if(blockchain.size()==0)
+        {
+            BlockData data = new BlockData(candidate);
+            Block b = new Block("0",data);
+            return b;
+        }
+
         BlockData p = new BlockData(candidate);
-        Block block = new Block(this.blockchain.get(this.blockchain.size()-1).getHash(),p);
-        return block;
+        return new Block(this.blockchain.get(this.blockchain.size()-1).getHash(),p);
     }
 
     @Override

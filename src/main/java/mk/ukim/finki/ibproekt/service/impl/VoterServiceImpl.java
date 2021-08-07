@@ -20,4 +20,9 @@ public class VoterServiceImpl implements VoterService {
     public Voter login(String username, String password, String ssn)  {
         return voterRepository.findByUsernameAndPasswordAndSsn(username,password,ssn).orElseThrow(()->new VoterNotFound("Korisnikot ne e najden"));
     }
+
+    @Override
+    public Voter save(Voter v) {
+        return this.voterRepository.save(v);
+    }
 }

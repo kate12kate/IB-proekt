@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface VoterService {
 
     public Voter login(String username, String password, String ssn);
+
+    Voter save(Voter v);
 }

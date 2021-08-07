@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CandidateServiceImpl implements CandidateService {
@@ -16,5 +17,10 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     public List<Candidate> findAll() {
         return candidateRepository.findAll();
+    }
+
+    @Override
+    public Optional<Candidate> findById(Long id) {
+        return this.candidateRepository.findById(id);
     }
 }

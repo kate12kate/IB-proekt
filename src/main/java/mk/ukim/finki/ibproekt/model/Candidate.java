@@ -1,11 +1,14 @@
 package mk.ukim.finki.ibproekt.model;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@Data
 public class Candidate {
 
     @Id
@@ -18,5 +21,12 @@ public class Candidate {
 
     private String image;
 
-
+    @Override
+    public String toString() {
+        return "Candidate{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}';
+    }
 }

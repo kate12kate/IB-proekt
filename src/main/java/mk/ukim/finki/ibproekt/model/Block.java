@@ -17,10 +17,13 @@ public class Block {
     public Block(String previousHash, BlockData blockData) {
         this.previousHash = previousHash;
         this.blockData = blockData;
+        this.hash=calculateHash();
+        this.timeStamp=new Date().getTime();
+        this.nonce = 0;
     }
 
     public String calculateHash(){
-        return CalculateSha.applySha256(this.previousHash+this.timeStamp+this.nonce+this.blockData.getPublicHash());
+        return CalculateSha.applySha256(this.previousHash+this.timeStamp+this.nonce+blockData.toString());
 
     }
     public void mineBlock(int difficulty) {

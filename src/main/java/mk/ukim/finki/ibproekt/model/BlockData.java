@@ -11,4 +11,11 @@ public class BlockData {
         this.candidate = candidate;
        // this.publicHash = publicHash;
     }
+
+    @Override
+    public String toString() {
+        return "BlockData{" +
+                "candidate=" + candidate +
+                '}';
+    }
 }
