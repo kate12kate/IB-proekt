@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/%22%3E">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -10,6 +10,17 @@
 </head>
 <body>
 
+<div class="row">
 
+    <div class="col-sm-3" th:each="candidate : ${candidates}">
+        <div class="card card-block">
+            <img class="card-img-top"  alt="100%x180" th:src="${candidate.getImage()}" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
+            <div class="card-block">
+                <h4 class="card-title" th:text="${candidate.getName()+' '+candidate.getSurname()}"></h4>
+                <a href="#" class="btn btn-primary" th:text="'Vote for '+${candidate.getName()+' '+ candidate.getSurname()}"></a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
