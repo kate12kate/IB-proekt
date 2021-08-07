@@ -14,6 +14,10 @@ public class Block {
     private Integer nonce;
     private BlockData blockData;
 
+    public Block(String previousHash, BlockData blockData) {
+        this.previousHash = previousHash;
+        this.blockData = blockData;
+    }
 
     public String calculateHash(){
         return CalculateSha.applySha256(this.previousHash+this.timeStamp+this.nonce+this.blockData.getPublicHash());

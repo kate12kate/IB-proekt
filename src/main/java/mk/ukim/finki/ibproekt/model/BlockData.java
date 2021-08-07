@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class BlockData {
     private Candidate candidate;
-    private String publicHash;
+    //private String publicHash;
 
-    public BlockData(Candidate candidate, String publicHash) {
+    public BlockData(Candidate candidate) {
         this.candidate = candidate;
-        this.publicHash = publicHash;
+       // this.publicHash = publicHash;
     }
 }
