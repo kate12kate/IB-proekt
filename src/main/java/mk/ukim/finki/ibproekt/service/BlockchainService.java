@@ -5,6 +5,7 @@ import mk.ukim.finki.ibproekt.model.Candidate;
 import mk.ukim.finki.ibproekt.model.Peer;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BlockchainService {
 
@@ -23,4 +24,6 @@ public interface BlockchainService {
     boolean removePeer(String peer_id);
 
     List<Peer> getConnectedPeers();
+
+    String sealVotes();
 }
