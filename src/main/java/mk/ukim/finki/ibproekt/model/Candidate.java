@@ -21,6 +21,10 @@ public class Candidate {
 
     private String image;
 
+    public String getFullName(){
+        return name + " " + surname;
+    }
+
     @Override
     public String toString() {
         return "Candidate{" +
