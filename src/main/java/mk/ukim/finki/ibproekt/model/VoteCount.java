@@ -10,7 +10,10 @@ public class VoteCount {
 
     private Map<String,Integer> countVotesByName;
 
+    public  Integer numberOfVotes;
+
     public VoteCount() {
         this.countVotesByName = new HashMap<>();
+        numberOfVotes = 0;
     }
 }

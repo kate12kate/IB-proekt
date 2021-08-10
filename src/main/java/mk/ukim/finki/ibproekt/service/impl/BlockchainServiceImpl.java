@@ -54,7 +54,7 @@ public class BlockchainServiceImpl implements BlockchainService {
 
     @Override
     public void addBlock(Block block) {
-
+        
         block.mineBlock(difficulty);
         blockchain.add(block);
 
@@ -132,6 +132,12 @@ public class BlockchainServiceImpl implements BlockchainService {
                                 return v;
                             });
                 });
+
+        int count = voteCount.getCountVotesByName()
+                .values()
+                .stream().mapToInt(i -> i).sum();
+
+        voteCount.setNumberOfVotes(count);
         return voteCount;
     }
 
