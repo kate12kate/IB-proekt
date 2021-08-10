@@ -8,7 +8,10 @@ import mk.ukim.finki.ibproekt.service.BlockchainService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
 
 @Service
 public class BlockchainServiceImpl implements BlockchainService {
@@ -116,4 +119,16 @@ public class BlockchainServiceImpl implements BlockchainService {
     public List<Peer> getConnectedPeers() {
         return this.connectedPeers;
     }
+
+    @Override
+    //public Map<String, Integer> sealVotes()
+    public String sealVotes(){
+        Map<String, Integer> totalVotes = new HashMap<>();
+        for (Block block:blockchain){
+            totalVotes.putIfAbsent(block.getBlockData().getCandidate().getFullName(), 0);
+            totalVotes.computeIfPresent(block.getBlockData().getCandidate().getFullName(),(k,v)->v+1);
+        }
+        return totalVotes.toString();
+    }
+
 }
