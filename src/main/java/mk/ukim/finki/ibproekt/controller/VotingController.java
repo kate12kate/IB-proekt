@@ -1,15 +1,13 @@
 package mk.ukim.finki.ibproekt.controller;
 
-import mk.ukim.finki.ibproekt.model.Block;
-import mk.ukim.finki.ibproekt.model.BlockData;
-import mk.ukim.finki.ibproekt.model.Candidate;
-import mk.ukim.finki.ibproekt.model.Voter;
+import mk.ukim.finki.ibproekt.model.*;
 import mk.ukim.finki.ibproekt.model.exceptions.CandidateDoesNotExists;
 import mk.ukim.finki.ibproekt.service.BlockchainService;
 import mk.ukim.finki.ibproekt.service.CandidateService;
 import mk.ukim.finki.ibproekt.service.VoterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,5 +38,14 @@ public class VotingController {
       v.setVoted(true);
       voterService.save(v);
       return "done";
+    }
+
+    @GetMapping("/countVotes")
+    public String count(Model model)
+    {
+        VoteCount vc = this.blockchainService
+                .sealVotes();
+        model.addAttribute("map",vc);
+        return "voteCount";
     }
 }

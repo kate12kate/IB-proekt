@@ -1,9 +1,6 @@
 package mk.ukim.finki.ibproekt.service.impl;
 
-import mk.ukim.finki.ibproekt.model.Block;
-import mk.ukim.finki.ibproekt.model.BlockData;
-import mk.ukim.finki.ibproekt.model.Candidate;
-import mk.ukim.finki.ibproekt.model.Peer;
+import mk.ukim.finki.ibproekt.model.*;
 import mk.ukim.finki.ibproekt.service.BlockchainService;
 import org.springframework.stereotype.Service;
 
@@ -122,13 +119,20 @@ public class BlockchainServiceImpl implements BlockchainService {
 
     @Override
     //public Map<String, Integer> sealVotes()
-    public String sealVotes(){
-        Map<String, Integer> totalVotes = new HashMap<>();
-        for (Block block:blockchain){
-            totalVotes.putIfAbsent(block.getBlockData().getCandidate().getFullName(), 0);
-            totalVotes.computeIfPresent(block.getBlockData().getCandidate().getFullName(),(k,v)->v+1);
-        }
-        return totalVotes.toString();
+    public VoteCount sealVotes(){
+        VoteCount voteCount = new VoteCount();
+        this.blockchain
+                .forEach(block -> {
+                    String candidateName = block.getBlockData().getCandidate().getFullName();
+                    voteCount.getCountVotesByName()
+                            .putIfAbsent(candidateName,0);
+                    voteCount.getCountVotesByName()
+                            .computeIfPresent(candidateName,(k,v)->{
+                                ++v;
+                                return v;
+                            });
+                });
+        return voteCount;
     }
 
 }
