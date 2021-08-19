@@ -21,7 +21,7 @@ public class IbProektApplication {
         JavaMailSenderImpl mailSender=new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(25);
-        mailSender.setUsername("slusalki.telefon@gmail.com");
+        mailSender.setUsername("finki.test123@gmail.com");
         mailSender.setPassword("kockaiportokal");
         Properties properties=mailSender.getJavaMailProperties();
         properties.put("mail.transport.protocol","smtp");
