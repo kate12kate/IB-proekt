@@ -1,0 +1,5 @@
+Hi {{user}}
+
+Your verification code is {{otpnum}}.
+
+Thank you for voting!

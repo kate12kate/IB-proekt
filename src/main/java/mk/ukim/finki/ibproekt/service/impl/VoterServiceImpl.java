@@ -22,6 +22,11 @@ public class VoterServiceImpl implements VoterService {
     }
 
     @Override
+    public Voter findByUsername(String username) {
+        return voterRepository.findByUsername(username).orElseThrow(()->new VoterNotFound("Nema vakov voter"));
+    }
+
+    @Override
     public Voter save(Voter v) {
         return this.voterRepository.save(v);
     }

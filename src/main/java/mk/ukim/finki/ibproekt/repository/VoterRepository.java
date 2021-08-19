@@ -9,5 +9,5 @@ public interface VoterRepository extends JpaRepository<Voter,Long> {
 
     Optional<Voter> findByUsernameAndPasswordAndSsn(String username,String password,String ssn);
 
-
+    Optional<Voter> findByUsername(String username);
 }

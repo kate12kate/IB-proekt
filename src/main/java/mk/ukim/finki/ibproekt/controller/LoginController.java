@@ -34,7 +34,7 @@ public class LoginController {
         try{
              voter=voterService.login(username,password,ssn);
             request.getSession().setAttribute("voter",voter);
-            return "redirect:/home";
+            return "redirect:/generateOtp";
         }
          catch (VoterNotFound voterNotFound){
             return "login";

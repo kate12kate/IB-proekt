@@ -31,7 +31,9 @@ public class Voter {
 
     private boolean voted;
 
-    public Voter(String username, String password, String name, String surname, String ssn, String address, Integer years, boolean voted) {
+    private String email;
+
+    public Voter(String username, String password, String name, String surname, String ssn, String address, Integer years, boolean voted,String email) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -40,6 +42,7 @@ public class Voter {
         this.address = address;
         this.years = years;
         this.voted = voted;
+        this.email=email;
     }
 
     public Voter() {
