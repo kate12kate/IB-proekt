@@ -41,7 +41,7 @@ public class OtpController {
         logger.info("OTP : " + otp);
 
         //Generate The Template to send OTP
-        EmailTemplate template = new EmailTemplate("C:/Users/kater/Documents/GitHub/ib-proekt/email-template/SendCode.txt");
+        EmailTemplate template = new EmailTemplate("C:/Users/vojce/Desktop/IB-proekt/email-template/SendCode.txt");
 
         Map<String, String> replacements = new HashMap<String, String>();
         replacements.put("user", voter.getUsername());
