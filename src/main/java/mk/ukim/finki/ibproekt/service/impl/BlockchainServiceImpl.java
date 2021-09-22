@@ -14,9 +14,10 @@ import java.util.concurrent.Callable;
 public class BlockchainServiceImpl implements BlockchainService {
 
     private List<Block> blockchain = new ArrayList<>();
-    private List<Peer> connectedPeers = new ArrayList<>();
+
     public static int difficulty = 3;
 
+    //pravenje na nulti block
     @Override
     public void createChainData() {
         BlockData data = new BlockData(null);
@@ -29,6 +30,8 @@ public class BlockchainServiceImpl implements BlockchainService {
         return this.blockchain;
     }
 
+
+    //iterira niz celiot chain i gleda dali prev hash na momentalniot blockot e ist so prethodniot
     @Override
     public Boolean isChainValid() {
         Block currentBlock;
@@ -73,49 +76,10 @@ public class BlockchainServiceImpl implements BlockchainService {
         return new Block(this.blockchain.get(this.blockchain.size()-1).getHash(),p);
     }
 
-    @Override
-    public boolean addPeer(String peer_id) {
 
-        boolean verif = false;
 
-        for (int i = 0; i < this.connectedPeers.size(); i++) {
-            if (this.connectedPeers.get(i).getPeer_id().equals(peer_id)) {
-                verif = true;
-                break;
-            }
-        }
 
-        if (!verif) {
-            Peer p = new Peer(peer_id);
-            this.connectedPeers.add(p);
-            System.out.println("Adding peer...");
-            return true;
-        } else {
-            System.out.println("Peer exist");
-            return false;
-        }
-    }
 
-    @Override
-    public boolean removePeer(String peer_id) {
-        boolean verif = false;
-
-        for(int i=0;i<this.connectedPeers.size();i++)
-        {
-            if(this.connectedPeers.get(i).getPeer_id().equals(peer_id))
-            {
-                this.connectedPeers.remove(i);
-                verif = true;
-                break;
-            }
-        }
-        return verif;
-    }
-
-    @Override
-    public List<Peer> getConnectedPeers() {
-        return this.connectedPeers;
-    }
 
     @Override
     //public Map<String, Integer> sealVotes()

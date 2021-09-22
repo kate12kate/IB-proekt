@@ -3,7 +3,7 @@ package mk.ukim.finki.ibproekt.service;
 import mk.ukim.finki.ibproekt.model.Block;
 import mk.ukim.finki.ibproekt.model.Candidate;
 import mk.ukim.finki.ibproekt.model.VoteCount;
-import mk.ukim.finki.ibproekt.model.Peer;
+
 
 import java.util.List;
 
@@ -19,11 +19,9 @@ public interface BlockchainService {
 
     Block createBlock(Candidate candidate);
 
-    boolean addPeer(String peer_id);
 
-    boolean removePeer(String peer_id);
 
-    List<Peer> getConnectedPeers();
+
 
     VoteCount sealVotes();
 }
