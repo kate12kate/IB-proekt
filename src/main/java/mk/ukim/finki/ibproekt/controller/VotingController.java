@@ -6,6 +6,8 @@ import mk.ukim.finki.ibproekt.service.BlockchainService;
 import mk.ukim.finki.ibproekt.service.CandidateService;
 import mk.ukim.finki.ibproekt.service.VoterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,18 +30,18 @@ public class VotingController {
     private VoterService voterService;
 
     @GetMapping("/{id}")
-    public String vote(@PathVariable Long id, HttpServletRequest request)
+    public String vote(@PathVariable Long id, HttpServletRequest request, Authentication authentication)
     {
         Candidate candidate = this.candidateService.findById(id)
                 .orElseThrow(()->new CandidateDoesNotExists("Candidate does not exists"));
       Block b =  this.blockchainService.createBlock(candidate);
       blockchainService.addBlock(b);
-      Voter v = (Voter) request.getSession().getAttribute("voter");
+      Voter v = (Voter) authentication.getPrincipal();
       v.setVoted(true);
       voterService.save(v);
       return "done";
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/countVotes")
     public String count(Model model)
     {

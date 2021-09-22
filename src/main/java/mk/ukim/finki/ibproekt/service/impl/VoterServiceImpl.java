@@ -5,6 +5,9 @@ import mk.ukim.finki.ibproekt.model.exceptions.VoterNotFound;
 import mk.ukim.finki.ibproekt.repository.VoterRepository;
 import mk.ukim.finki.ibproekt.service.VoterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,7 +16,8 @@ import java.util.Optional;
 public class VoterServiceImpl implements VoterService {
     @Autowired
     private VoterRepository voterRepository;
-
+    @Autowired
+    private PasswordEncoder encoder;
 
 
     @Override
@@ -29,5 +33,10 @@ public class VoterServiceImpl implements VoterService {
     @Override
     public Voter save(Voter v) {
         return this.voterRepository.save(v);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return voterRepository.findByUsername(s).orElseThrow(()->new UsernameNotFoundException(s));
     }
 }

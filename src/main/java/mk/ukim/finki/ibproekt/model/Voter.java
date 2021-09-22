@@ -1,15 +1,16 @@
 package mk.ukim.finki.ibproekt.model;
 
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Data
-public class Voter {
+public class Voter implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +33,15 @@ public class Voter {
     private boolean voted;
 
     private String email;
+    private boolean isAccountNonExpired = true;
+    private boolean isAccountNonLocked = true;
+    private boolean isCredentialsNonExpired = true;
+    private boolean isEnabled = true;
 
-    public Voter(String username, String password, String name, String surname, String ssn, String address, Integer years, boolean voted,String email) {
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+
+    public Voter(String username,Role role, String password, String name, String surname, String ssn, String address, Integer years, boolean voted,String email) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -43,8 +51,34 @@ public class Voter {
         this.years = years;
         this.voted = voted;
         this.email=email;
+        this.role = role;
     }
 
     public Voter() {
     }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(role);
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return isAccountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return isCredentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
 }
