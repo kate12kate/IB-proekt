@@ -41,6 +41,7 @@ public class VotingController {
       voterService.save(v);
       return "done";
     }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/countVotes")
     public String count(Model model)

@@ -1,17 +1,22 @@
 package mk.ukim.finki.ibproekt.service.impl;
 
-import mk.ukim.finki.ibproekt.model.*;
+import mk.ukim.finki.ibproekt.model.Block;
+import mk.ukim.finki.ibproekt.model.BlockData;
+import mk.ukim.finki.ibproekt.model.Candidate;
+import mk.ukim.finki.ibproekt.model.VoteCount;
 import mk.ukim.finki.ibproekt.service.BlockchainService;
 import org.springframework.stereotype.Service;
 
+import java.security.*;
+import java.security.spec.ECGenParameterSpec;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
 
 @Service
 public class BlockchainServiceImpl implements BlockchainService {
+
+    public PrivateKey privateKey;
+    public PublicKey publicKey;
 
     private List<Block> blockchain = new ArrayList<>();
 
@@ -21,7 +26,7 @@ public class BlockchainServiceImpl implements BlockchainService {
     @Override
     public void createChainData() {
         BlockData data = new BlockData(null);
-        Block block = new Block("0",data);
+        Block block = new Block("0",data,null);
         this.blockchain.add(block);
     }
 
@@ -57,9 +62,14 @@ public class BlockchainServiceImpl implements BlockchainService {
 
     @Override
     public void addBlock(Block block) {
-        
-        block.mineBlock(difficulty);
-        blockchain.add(block);
+        String data = block.getSignatureString();
+        byte[] signature = block.getSignature();
+        boolean verification = verifyECDSASig(publicKey, data, signature);
+
+        if(verification) {
+            block.mineBlock(difficulty);
+            blockchain.add(block);
+        }
 
     }
 
@@ -68,14 +78,41 @@ public class BlockchainServiceImpl implements BlockchainService {
         if(blockchain.size()==0)
         {
             BlockData data = new BlockData(candidate);
-            Block b = new Block("0",data);
+            Block b = new Block("0",data,null);
             return b;
         }
+        generateKeyPair();
 
         BlockData p = new BlockData(candidate);
-        return new Block(this.blockchain.get(this.blockchain.size()-1).getHash(),p);
+        return new Block(this.blockchain.get(this.blockchain.size()-1).getHash(),p,privateKey);
     }
 
+    public void generateKeyPair() {
+        try {
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECDSA","BC");
+            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+            ECGenParameterSpec ecSpec = new ECGenParameterSpec("prime192v1");
+
+            keyGen.initialize(ecSpec, random);
+            KeyPair keyPair = keyGen.generateKeyPair();
+
+            privateKey = keyPair.getPrivate();
+            publicKey = keyPair.getPublic();
+        }catch(Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean verifyECDSASig(PublicKey publicKey, String data, byte[] signature) {
+        try {
+            Signature ecdsaVerify = Signature.getInstance("ECDSA", "BC");
+            ecdsaVerify.initVerify(publicKey);
+            ecdsaVerify.update(data.getBytes());
+            return ecdsaVerify.verify(signature);
+        }catch(Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 
