@@ -22,8 +22,13 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
        Voter v =  new Voter("vojdan", Role.ROLE_USER,passwordEncoder.encode("filipion123"),"Vojdan","Ristovski","2704000450035","address1",21,false,"ristovskivojdan@gmail.com");
        Voter v1 =  new Voter("kate", Role.ROLE_USER,passwordEncoder.encode("kate123"),"Katerina","Gligorovska","0309999455051","address2",21,false,"katerinagligorovska@gmail.com");
        Voter v2=  new Voter("admin", Role.ROLE_ADMIN,passwordEncoder.encode("admin"),"Admin","Admin","0000","address3",21,false,"admin@gmail.com");
+       Voter v3 =  new Voter("bojan", Role.ROLE_USER,passwordEncoder.encode("bojan"),"Bojan","Robev","12345678","address3",21,false,"bojan.robev@gmail.com");
+       Voter v4 =  new Voter("petar", Role.ROLE_USER,passwordEncoder.encode("petar"),"Petar","Kasapinov","25252525","address3",21,false,"kasapinov.petar@gmail.com");
+
        userRepository.save(v);
        userRepository.save(v1);
        userRepository.save(v2);
+        userRepository.save(v3);
+        userRepository.save(v4);
     }
 }
